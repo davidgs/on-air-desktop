@@ -14,6 +14,9 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+const dgram = require('dgram');
+const PORT = 4444;
+const HOST = '192.168.1.56';
 
 class AppUpdater {
   constructor() {
@@ -33,6 +36,16 @@ export interface IpcRequest {
 
 ipcMain.handle('on-off', (event: Event, key: string) => {
   console.log('on-off: ', key);
+  // const message = new Buffer(key);
+  // console.log('message: ', message);
+  console.log('HOST: ', HOST);
+  console.log('PORT: ', PORT);
+  // const client = dgram.createSocket('udp4');
+  // client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
+  // if (err) throw err;
+  //   console.log('UDP message sent to ' + HOST +':'+ PORT);
+  //   client.close();
+  // });
   return `on-off: ${key}`;
 });
 
