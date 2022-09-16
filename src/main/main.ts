@@ -1,4 +1,5 @@
-/* eslint global-require: off, no-console: off, promise/always-return: off */
+/* eslint-disable no-console */
+/* eslint global-require: off, promise/always-return: off */
 
 /**
  * This module executes inside of electron's main process. You can start
@@ -37,28 +38,17 @@ export interface IpcRequest {
 }
 
 ipcMain.handle('on-off', (_event: Event, key: string) => {
-  console.log('on-off: ', key);
-  console.log('HOST: ', HOST);
-  console.log('PORT: ', PORT);
-  console.log('length: ', key.length);
   const client = dgram.createSocket('udp4');
-  // client.connect(PORT, HOST, () => {
-  console.log('connected');
   // eslint-disable-next-line func-names
-  client.send(key, 0, key.length, PORT, HOST, (err: never) => {
+  client.send(key, 0, key.length, PORT, HOST, (err: Error) => {
     if (err) {
-      console.log(`Error: ${err}`);
       client.close();
+      throw err;
     } else {
-      console.log(`UDP message: ${key} sent to ${HOST}:${PORT}`);
       client.close();
     }
   });
   return `on-off: ${key}`;
-});
-
-ipcMain.handle('home-path', () => {
-  return 'home';
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -101,8 +91,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 580,
+    height: 170,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       sandbox: false,

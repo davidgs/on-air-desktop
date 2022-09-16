@@ -54,17 +54,17 @@ export default class MenuBuilder {
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'Electron',
+      label: 'On-Air-Desktop',
       submenu: [
         {
-          label: 'About ElectronReact',
+          label: 'About On-Air-Desktop',
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide ElectronReact',
+          label: 'Hide On-Air-Desktop',
           accelerator: 'Command+H',
           selector: 'hide:',
         },
@@ -157,27 +157,23 @@ export default class MenuBuilder {
         {
           label: 'Learn More',
           click() {
-            shell.openExternal('https://electronjs.org');
+            shell.openExternal('https://github.com/davidgs/on-air-desktop');
           },
         },
         {
           label: 'Documentation',
           click() {
             shell.openExternal(
-              'https://github.com/electron/electron/tree/main/docs#readme'
+              'https://github.com/davidgs/on-air-desktop#readme'
             );
-          },
-        },
-        {
-          label: 'Community Discussions',
-          click() {
-            shell.openExternal('https://www.electronjs.org/community');
           },
         },
         {
           label: 'Search Issues',
           click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
+            shell.openExternal(
+              'https://github.com/davidgs/on-air-desktop/issues'
+            );
           },
         },
       ],
@@ -258,27 +254,23 @@ export default class MenuBuilder {
           {
             label: 'Learn More',
             click() {
-              shell.openExternal('https://electronjs.org');
+              shell.openExternal('https://github.com/davidgs/on-air-desktop');
             },
           },
           {
             label: 'Documentation',
             click() {
               shell.openExternal(
-                'https://github.com/electron/electron/tree/main/docs#readme'
+                'https://github.com/davidgs/on-air-desktop#readme'
               );
-            },
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://www.electronjs.org/community');
             },
           },
           {
             label: 'Search Issues',
             click() {
-              shell.openExternal('https://github.com/electron/electron/issues');
+              shell.openExternal(
+                'https://github.com/davidgs/on-air-dekstop/issues'
+              );
             },
           },
         ],

@@ -8,9 +8,9 @@ body {
   height: 100vh;
   background: linear-gradient(
     200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
+    #f9f7f7 -29.09%,
+    #979696 51.77%,
+    #414141 129.35%
   );
   font-family: sans-serif;
   overflow-y: hidden;
@@ -63,4 +63,14 @@ a:hover {
 
 .Hello img {
   cursor: pointer;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+.Hello h1 {
+  font-size: 3rem;
+  margin: 0 20px;
+  display: inline-flex;
 }

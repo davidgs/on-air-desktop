@@ -3,12 +3,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import redball from '../../assets/Aqua-Ball-Red-icon.png';
-import greenball from '../../assets/Aqua-Ball-Green-icon.png';
+import OnIcon from '../../assets/ON.png';
+import OffIcon from '../../assets/OFF.png';
 import './App.css';
 
 const Hello = () => {
-  const [icon, setIcon] = useState(redball);
+  const [icon, setIcon] = useState(OffIcon);
 
   const handleSign = (onoff: string) => {
     console.log('ON/OFF: ', onoff);
@@ -23,19 +23,23 @@ const Hello = () => {
       });
   };
   const updateIcon = () => {
-    if (icon === redball) {
-      setIcon(greenball);
-      handleSign('OFF\n');
+    if (icon === OnIcon) {
+      setIcon(OffIcon);
+      handleSign('OFF');
     } else {
-      setIcon(redball);
-      handleSign('ON\n');
+      setIcon(OnIcon);
+      handleSign('ON');
     }
   };
 
   return (
     <div>
       <div className="Hello">
-        <img width="256" alt="icon" src={icon} onClick={updateIcon} />
+        <h1>On Air Sign</h1>
+        <br />
+        <div>
+          <img width="256" alt="icon" src={icon} onClick={updateIcon} />
+        </div>
       </div>
     </div>
   );
