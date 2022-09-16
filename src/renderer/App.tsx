@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
@@ -9,17 +10,6 @@ import './App.css';
 const Hello = () => {
   const [icon, setIcon] = useState(redball);
 
-  const getHome = () => {
-    window.electron
-      .onOff()
-      .then((response: ImageData) => {
-        console.log(response);
-        return '';
-      })
-      .catch((error: unknown) => {
-        console.log(`Error: ${error}`);
-      });
-  };
   const handleSign = (onoff: string) => {
     console.log('ON/OFF: ', onoff);
     window.electron
@@ -35,13 +25,12 @@ const Hello = () => {
   const updateIcon = () => {
     if (icon === redball) {
       setIcon(greenball);
-      handleSign('OFF');
+      handleSign('OFF\n');
     } else {
       setIcon(redball);
-      handleSign('ON');
+      handleSign('ON\n');
     }
   };
-
 
   return (
     <div>
