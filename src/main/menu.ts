@@ -100,6 +100,35 @@ export default class MenuBuilder {
         },
       ],
     };
+    const subMenuActions: DarwinMenuItemConstructorOptions = {
+      label: 'Actions',
+      submenu: [
+        {
+          label: 'On-Air Sign',
+          accelerator: 'Command+O',
+          click: () => {
+            app.emit('ipc-message', { event: null, message: 'SIGN' });
+          },
+          selector: 'on-air:',
+        },
+        {
+          label: 'Glow Orb',
+          accelerator: 'Command+G',
+          click: () => {
+            app.emit('ipc-message', { message: 'ORB' });
+          },
+          selector: 'glow-orb:',
+        },
+        {
+          label: 'Fountain',
+          accelerator: 'Command+F',
+          click: () => {
+            app.emit('ipc-message', { event: null, message: 'FOUNTAIN' });
+          },
+          selector: 'fountain:',
+        },
+      ],
+    };
     const subMenuViewDev: MenuItemConstructorOptions = {
       label: 'View',
       submenu: [
@@ -164,7 +193,7 @@ export default class MenuBuilder {
           label: 'Documentation',
           click() {
             shell.openExternal(
-              'https://github.com/davidgs/on-air-desktop#readme'
+              'https://github.com/davidgs/on-air-desktop#readme',
             );
           },
         },
@@ -172,7 +201,7 @@ export default class MenuBuilder {
           label: 'Search Issues',
           click() {
             shell.openExternal(
-              'https://github.com/davidgs/on-air-desktop/issues'
+              'https://github.com/davidgs/on-air-desktop/issues',
             );
           },
         },
@@ -185,7 +214,14 @@ export default class MenuBuilder {
         ? subMenuViewDev
         : subMenuViewProd;
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+    return [
+      subMenuAbout,
+      subMenuEdit,
+      subMenuActions,
+      subMenuView,
+      subMenuWindow,
+      subMenuHelp,
+    ];
   }
 
   buildDefaultTemplate() {
@@ -224,7 +260,7 @@ export default class MenuBuilder {
                   accelerator: 'F11',
                   click: () => {
                     this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
+                      !this.mainWindow.isFullScreen(),
                     );
                   },
                 },
@@ -242,7 +278,7 @@ export default class MenuBuilder {
                   accelerator: 'F11',
                   click: () => {
                     this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
+                      !this.mainWindow.isFullScreen(),
                     );
                   },
                 },
@@ -261,7 +297,7 @@ export default class MenuBuilder {
             label: 'Documentation',
             click() {
               shell.openExternal(
-                'https://github.com/davidgs/on-air-desktop#readme'
+                'https://github.com/davidgs/on-air-desktop#readme',
               );
             },
           },
@@ -269,7 +305,7 @@ export default class MenuBuilder {
             label: 'Search Issues',
             click() {
               shell.openExternal(
-                'https://github.com/davidgs/on-air-dekstop/issues'
+                'https://github.com/davidgs/on-air-dekstop/issues',
               );
             },
           },

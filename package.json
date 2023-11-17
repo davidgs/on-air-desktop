@@ -2,7 +2,6 @@
   "description": "A Simple on/off switch for an On-Air sign",
   "keywords": [
     "electron",
-    "boilerplate",
     "react",
     "typescript",
     "ts",
@@ -25,24 +24,17 @@
     "email": "onair@davidgs.com",
     "url": "https://davidgs.com"
   },
-  "contributors": [
-    {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
-    }
-  ],
   "main": "./src/main/main.ts",
   "scripts": {
-    "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
+    "build": "concurrently \"yarn run build:main\" \"yarn run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
     "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
     "postinstall": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
     "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
-    "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never",
+    "package": "ts-node ./.erb/scripts/clean.js dist && yarn run build && electron-builder build --publish never",
     "prepare": "husky install",
     "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
-    "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
+    "start": "ts-node ./.erb/scripts/check-port-in-use.js && yarn run start:renderer",
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
@@ -108,11 +100,15 @@
     }
   },
   "dependencies": {
+    "bootstrap": "^5.3.1",
     "dgram": "^1.0.1",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
     "electron-updater": "^5.2.2",
+    "mqtt": "^5.0.3",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.8.0",
+    "react-bootstrap-icons": "^1.10.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0"
   },
@@ -122,6 +118,7 @@
     "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
+    "@types/electron": "^1.6.10",
     "@types/jest": "^28.1.7",
     "@types/node": "18.7.6",
     "@types/react": "^18.0.17",
@@ -150,6 +147,7 @@
     "eslint-config-erb": "^4.0.3",
     "eslint-import-resolver-typescript": "^3.4.1",
     "eslint-import-resolver-webpack": "^0.13.2",
+    "eslint-plugin-prettier": "^5.0.0-alpha.1",
     "eslint-plugin-compat": "^4.0.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.8.3",
@@ -165,7 +163,7 @@
     "jest-environment-jsdom": "^28.1.3",
     "lint-staged": "^13.0.3",
     "mini-css-extract-plugin": "^2.6.1",
-    "prettier": "^2.7.1",
+    "prettier": "^3.0.0",
     "react-refresh": "^0.14.0",
     "react-test-renderer": "^18.2.0",
     "rimraf": "^3.0.2",

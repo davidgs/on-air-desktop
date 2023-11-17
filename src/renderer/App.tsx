@@ -1,56 +1,49 @@
-/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint global-require: off, import/extensions: off */
 import { useState } from 'react';
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import OnIcon from '../../assets/ON.png';
-import OffIcon from '../../assets/OFF.png';
+import { Lightbulb, LightbulbFill } from 'react-bootstrap-icons';
+import { Button } from 'react-bootstrap';
+import OnOffComponent from './OnOffComponent';
 import './App.css';
 
-const Hello = () => {
-  const [icon, setIcon] = useState(OffIcon);
+export default function App() {
+  const [dark, setDark] = useState(true);
 
-  const handleSign = (onoff: string) => {
-    console.log('ON/OFF: ', onoff);
-    window.electron
-      .onOff(null, onoff)
-      .then((response: string) => {
-        console.log(response);
-        return '';
-      })
-      .catch((error: unknown) => {
-        console.log(`Error: ${error}`);
-      });
-  };
-  const updateIcon = () => {
-    if (icon === OnIcon) {
-      setIcon(OffIcon);
-      handleSign('OFF');
+  const toggleDark = () => {
+    if (!dark) {
+      window.document
+        .getElementsByTagName('html')[0]
+        .setAttribute('data-bs-theme', 'dark');
     } else {
-      setIcon(OnIcon);
-      handleSign('ON');
+      window.document
+        .getElementsByTagName('html')[0]
+        .setAttribute('data-bs-theme', 'light');
     }
+    setDark(!dark);
   };
-
   return (
     <div>
-      <div className="Hello">
-        <h1>On Air Sign</h1>
-        <br />
-        <div>
-          <img width="256" alt="icon" src={icon} onClick={updateIcon} />
-        </div>
-      </div>
+      <OnOffComponent type="SIGN" title="On Air Sign" />
+      <OnOffComponent type="ORB" title="Glow Orb&nbsp;&nbsp;&nbsp;&nbsp;" />
+      <OnOffComponent
+        type="FOUNTAIN"
+        title="Fountain&nbsp;&nbsp;&nbsp;&nbsp;"
+      />
+      <Button
+        type="button"
+        size="sm"
+        onClick={toggleDark}
+        className="btn"
+        style={{
+          color: dark ? '#ffffff' : '#212529',
+          backgroundColor: dark ? '#ffffff' : '#212529',
+          borderColor: !dark ? '#ffffff' : '#212529',
+        }}
+      >
+        {dark ? <LightbulbFill size={20} /> : <Lightbulb size={20} />}
+      </Button>
+      <div>&nbsp;</div>
     </div>
-  );
-};
-
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
   );
 }

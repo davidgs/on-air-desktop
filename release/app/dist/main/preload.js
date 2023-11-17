@@ -1,8 +1,2 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const electron_1 = require("electron");
-electron_1.contextBridge.exposeInMainWorld('electron', {
-    onOff: (event, key) => electron_1.ipcRenderer.invoke('on-off', key),
-    homePath: () => electron_1.ipcRenderer.invoke('home-path'),
-});
+(()=>{"use strict";var e={2298:e=>{e.exports=require("electron")}},r={};function n(o){var t=r[o];if(void 0!==t)return t.exports;var i=r[o]={exports:{}};return e[o](i,i.exports,n),i.exports}var o={};(()=>{var e=o;Object.defineProperty(e,"__esModule",{value:!0});const r=n(2298);r.contextBridge.exposeInMainWorld("electron",{onOffSign:(e,n,o)=>r.ipcRenderer.invoke("on-off-sign",n,o),homePath:()=>r.ipcRenderer.invoke("home-path"),ipcRenderer:{sendMessage(e,...n){r.ipcRenderer.send(e,...n)},on(e,n){const o=(e,...r)=>n(...r);return r.ipcRenderer.on(e,o),()=>{r.ipcRenderer.removeListener(e,o)}},once(e,n){r.ipcRenderer.once(e,((e,...r)=>n(...r)))}}})})(),module.exports=o})();
 //# sourceMappingURL=preload.js.map

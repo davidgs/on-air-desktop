@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint global-require: off, promise/always-return: off */
-
+/* eslint global-require: off, import/extensions: off */
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -16,11 +16,10 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
-const dgram = require('dgram');
+const mqtt = require('mqtt');
 
-const PORT = 4444;
-const HOST = '192.168.1.56';
-
+const mqttBroker = 'yourMQttBroker';
+const clientID = 'yourID';
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -37,18 +36,125 @@ export interface IpcRequest {
   params?: string;
 }
 
-ipcMain.handle('on-off', (_event: Event, key: string) => {
-  const client = dgram.createSocket('udp4');
+// const client = dgram.createSocket('udp4');
+const client = mqtt.connect(mqttBroker, {
+  clientId: clientID,
+  clean: true,
+  reconnectPeriod: 1,
+});
+// eslint-disable-next-line func-names
+client.on('connect', function (connack) {
+  console.log('client connected', connack);
+});
+
+// eslint-disable-next-line func-names
+client.on('error', function (err: Error) {
+  console.log(`Error: ${err}`);
+});
+
+// eslint-disable-next-line func-names
+client.on('close', function () {
+  console.log('Connection closed by client');
+});
+
+// eslint-disable-next-line func-names
+client.on('reconnect', function () {
+  console.log('Client trying a reconnection');
+});
+
+// eslint-disable-next-line func-names
+client.on('offline', function () {
+  console.log('Client is currently offline');
+});
+
+const sendMessage = (msg: string) => {
+  if (mainWindow) {
+    mainWindow.webContents.send(msg, {
+      message: msg,
+    });
+  }
+};
+app.on('ipc-message', (event: any, message: any) => {
+  sendMessage(message);
+});
+
+ipcMain.handle('on-off-sign', (_event: any, key: string, value: string) => {
+  switch (key) {
+    case 'SIGN':
+      client.publish(
+        'on-air',
+        value,
+        { qos: 1, retain: false },
+        (_PacketCallback: any, err: Error) => {
+          if (err) {
+            console.log(err, 'MQTT publish packet');
+          }
+        },
+      );
+      break;
+    case 'FOUNTAIN':
+      client.publish(
+        'fountain',
+        value,
+        { qos: 1, retain: false },
+        (_PacketCallback: any, err: Error) => {
+          if (err) {
+            console.log(err, 'MQTT publish packet');
+          }
+        },
+      );
+      break;
+    default:
+      break;
+  }
+});
+ipcMain.handle('on-off-sign', (_event: Event, key: string, value: string) => {
   // eslint-disable-next-line func-names
-  client.send(key, 0, key.length, PORT, HOST, (err: Error) => {
-    if (err) {
-      client.close();
-      throw err;
-    } else {
-      client.close();
-    }
-  });
-  return `on-off: ${key}`;
+  switch (key) {
+    case 'SIGN':
+      client.publish(
+        'on-air',
+        value,
+        { qos: 1, retain: false },
+        (_PacketCallback: any, err: Error) => {
+          if (err) {
+            console.log(err, 'MQTT publish packet');
+          }
+        },
+      );
+      break;
+    case 'FOUNTAIN':
+      client.publish(
+        'fountain',
+        value,
+        { qos: 1, retain: false },
+        (_PacketCallback: any, err: Error) => {
+          if (err) {
+            console.log(err, 'MQTT publish packet');
+          }
+        },
+      );
+      break;
+    case 'ORB':
+      client.publish(
+        'orb',
+        value,
+        { qos: 1, retain: false },
+        (_PacketCallback: any, err: Error) => {
+          if (err) {
+            console.log(err, 'MQTT publish packet');
+          }
+        },
+      );
+      break;
+    default:
+      break;
+  }
+  return `on-off-${key}: ${value}`;
+});
+
+ipcMain.handle('on-off-fountain', (_event: Event, key: string) => {
+  return `on-off-fountain: ${key}`;
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -71,7 +177,7 @@ const installExtensions = async () => {
   return installer
     .default(
       extensions.map((name) => installer[name]),
-      forceDownload
+      forceDownload,
     )
     .catch(console.log);
 };
@@ -92,7 +198,7 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 580,
-    height: 170,
+    height: 500,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       sandbox: false,

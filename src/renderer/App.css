@@ -4,14 +4,7 @@
  */
 body {
   position: relative;
-  color: white;
   height: 100vh;
-  background: linear-gradient(
-    200.96deg,
-    #f9f7f7 -29.09%,
-    #979696 51.77%,
-    #414141 129.35%
-  );
   font-family: sans-serif;
   overflow-y: hidden;
   display: flex;
@@ -20,19 +13,23 @@ body {
 }
 
 button {
-  background-color: white;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 10px;
   border: none;
   appearance: none;
   font-size: 1.3rem;
-  box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
-    0px 18px 88px -4px rgba(24, 39, 75, 0.14);
+  /* box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12), */
+  /* 0px 18px 88px -4px rgba(24, 39, 75, 0.14); */
   transition: all ease-in 0.1s;
   cursor: pointer;
   opacity: 0.9;
+  background: transparent !important;
 }
 
+btn:hover {
+  transform: scale(1.25);
+  opacity: 1;
+}
 button:hover {
   transform: scale(1.05);
   opacity: 1;
@@ -74,3 +71,4 @@ img:hover {
   margin: 0 20px;
   display: inline-flex;
 }
+@import 'bootstrap/dist/css/bootstrap.css';

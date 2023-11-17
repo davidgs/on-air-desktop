@@ -1,3 +1,6 @@
 node_modules
 .DS_Store
 __tests__
+.env
+release/app/
+release/build/

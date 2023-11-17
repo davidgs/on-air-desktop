@@ -21,7 +21,10 @@ node_modules
 release/app/dist
 release/build
 .erb/dll
-
+.erb/scripts
+.erb/configs
+.erb/mocks
+.eslintrc.js
 .idea
 npm-debug.log.*
 *.css.d.ts
